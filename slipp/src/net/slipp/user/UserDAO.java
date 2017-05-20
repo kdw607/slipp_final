@@ -66,4 +66,17 @@ public class UserDAO {
 		pstmt.executeUpdate();
 		
 	}
+
+	public void updateUser(User user) throws SQLException {
+		
+		String sql = "update user set password=?, name=?, email=? where userId=?";
+		PreparedStatement pstmt = getConnection().prepareStatement(sql);
+		pstmt.setString(1, user.getPassword());
+		pstmt.setString(2, user.getName());
+		pstmt.setString(3, user.getEmail());
+		pstmt.setString(4, user.getUserId());
+		
+		pstmt.executeUpdate();
+		
+	}
 }

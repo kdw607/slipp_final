@@ -43,14 +43,21 @@ public class UserDAOTest {
 	
 	@Test
 	public void crud() throws Exception{
+		
 		User user = UserTest.TEST_USER;
-		//userDao.addUser(UserTest.TEST_USER);
+
 		userDao.removeUser(user.getUserId());
 		userDao.addUser(user);
 		
 		User dbUser = userDao.findByUserId(user.getUserId());
 		assertEquals(user, dbUser);
 		//userDao.addUser(UserTest.TEST_USER);
+		
+		
+		User updateUser = new User(user.getUserId(), "updatePass", "updateName", "updateEmail@");
+		userDao.updateUser(updateUser);
+		dbUser = userDao.findByUserId(updateUser.getUserId());
+		assertEquals(updateUser, dbUser);
 		
 	}
 	
@@ -63,6 +70,11 @@ public class UserDAOTest {
 	}*/
 	
 	
+	private void assertFalse(User user, User dbUser) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Test
 	public void 존재하지_않는_사용자_조회() throws Exception{
 
