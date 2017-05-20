@@ -13,17 +13,19 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/users/login")
 public class LoginServlet extends HttpServlet {
 
+	public static final String SESSION_USER_ID = "userId";
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		String userId = req.getParameter("userId");
+		String userId = req.getParameter(SESSION_USER_ID);
 		String password = req.getParameter("password");
 		
 		try{
 			User.login(userId, password);
 			HttpSession session = req.getSession();
-			session.setAttribute("userId", userId);//session 다른 jsp 에서 데이터 접근 가능
+			session.setAttribute(SESSION_USER_ID, userId);//session 다른 jsp 에서 데이터 접근 가능
 			resp.sendRedirect("/slipp");
 			
 		}catch(UserNotFoundException e){//없는 사용자 로그인할때

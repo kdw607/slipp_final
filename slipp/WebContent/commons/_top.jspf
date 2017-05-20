@@ -19,7 +19,7 @@
               <c:choose>
               <c:when test="${not empty userId}">
                     <li><a href="/slipp/users/logout">로그아웃</a></li>
-              		<li><a href="/users/update">개인정보수정</a></li>
+              		<li><a href="/slipp/users/updateForm">개인정보수정</a></li>
               </c:when>
               <c:otherwise>
                     <li><a href="/slipp/login.jsp">로그인</a></li>
