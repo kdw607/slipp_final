@@ -20,16 +20,16 @@
 					<h1>개인정보수정</h1>
 				</div>
 
-				<form class="form-horizontal" action="/slipp/users/save" method="post">
+				<form class="form-horizontal" action="/slipp/users/update" method="post">
 					<input type="hidden" name="userId" value="${user.userId}" />
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
-							<input type="text" name="userId" value="" />
+							${user.userId}
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="password">비밀번호</label>
+						<label class="control-label" for="password" value="${user.password}">비밀번호</label>
 						<div class="controls">
 							<input type="password" id="password" name="password" placeholder="">
 						</div>

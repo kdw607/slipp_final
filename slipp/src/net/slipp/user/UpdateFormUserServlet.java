@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
-@WebServlet("/users/updateForm")
+//Contoller
+@WebServlet("/users/update_Form")
 public class UpdateFormUserServlet extends HttpServlet{
 
 	@Override
@@ -30,18 +30,16 @@ public class UpdateFormUserServlet extends HttpServlet{
 		
 		String userId = (String)object;
 		System.out.println("User Id : " + userId);
-		UserDAO userDao = new UserDAO();
+		UserDAO userDao = new UserDAO();							//model
 		
 		
 		try {
-			User user = userDao.findByUserId(userId);
+			User user = userDao.findByUserId(userId);				//model
 			req.setAttribute("user", user);
 			RequestDispatcher rd = req.getRequestDispatcher("/update_form.jsp");
 			rd.forward(req, resp);
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
 	}
-	
 }
