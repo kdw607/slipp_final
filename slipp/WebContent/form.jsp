@@ -16,38 +16,38 @@
 			<div class="span12">
 				<section id="typography">
 				<div class="page-header">
-					<c:set var="pageName" value="회원가입" />
-					<c:if test="${isUpdate}">
-					<c:set var="pageName" value="개인정보수정" />
-					</c:if>
-					<h1>${pageName}</h1>
+					<c:choose>
+						<c:when test="${empty user.userId}">
+							<h1>회원가입</h1>	
+						</c:when>
+						<c:otherwise>
+							<h1>개인정보수정</h1>
+						</c:otherwise>
+					</c:choose>
 				</div>
+				</section>
 				
-				<c:set var="actionUrl" value="/users/create" />
-				<c:if test="${isUpdate}">
-				<c:set var="actionUrl" value="/users/update" />
+				<c:set var="name_val" value="회원가입"/>
+				<c:if test="${not empty user.userId}">
+				<c:set var="name_val" value="확인"/>
 				</c:if>
 				
-				<!-- 
+				<c:set var="actionUrl" value="/slipp/users/create"/>
+				<c:if test="${not empty user.userId}">
+				<c:set var="actionUrl" value="/slipp/users/update"/>
+				</c:if>
+								
 				<form class="form-horizontal" action="${actionUrl}" method="post">
-				 -->
-				<form class="form-horizontal" action="/slipp/users/save" method="post">
-					<c:if test="${not empty errorMessage}">
-					<div class="control-group">
-						<label class="error">${errorMessage}</label>
-					</div>
-					</c:if>
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
 							<c:choose>
-							<c:when test="${isUpdate}">
-							<input type="hidden" name="userId" value="${user.userId}" />
-							${user.userId}
-							</c:when>
-							<c:otherwise>
-							<input type="text" name="userId" value="${user.userId}" />
-							</c:otherwise>
+								<c:when test="${empty user.userId}">
+									<input type="text" name="userId" value="${user.userId}"/>
+								</c:when>
+								<c:otherwise>
+									${user.userId}
+								</c:otherwise>
 							</c:choose>
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button type="submit" class="btn btn-primary">${pageName}</button>
+							<button type="submit" class="btn btn-primary">${name_val}</button>
 						</div>
 					</div>
 				</form>

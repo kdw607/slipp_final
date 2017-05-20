@@ -23,7 +23,7 @@
               </c:when>
               <c:otherwise>
                     <li><a href="/slipp/login.jsp">로그인</a></li>
-                    <li><a href="/slipp/form.jsp">회원가입</a></li>
+                    <li><a href="/slipp/users/createForm">회원가입</a></li>
               </c:otherwise>
               </c:choose>
              
