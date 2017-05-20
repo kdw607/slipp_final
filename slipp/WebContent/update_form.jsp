@@ -48,7 +48,7 @@
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button type="submit" class="btn btn-primary">회원가입</button>
+							<button type="submit" class="btn btn-primary">확인</button>
 						</div>
 					</div>
 				</form>
