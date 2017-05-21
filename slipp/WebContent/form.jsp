@@ -41,10 +41,12 @@
 						<div class="controls">
 							<c:choose>
 								<c:when test="${isUpdate}">
+									<input type="hidden" name="userId" value="${user.userId}"/>
+									${user.userId}
 								</c:when>
 								<c:otherwise>
 									<input type="text" name="userId" value="${user.userId}"/>
-									<input type="hidden" name="userId" value="${user.userId}"/>
+
 								</c:otherwise>
 							</c:choose>
 						</div>
