@@ -24,23 +24,13 @@ public class CreateUserServlet extends HttpServlet {
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 
-		User user = new User(userId, password, name, email);
-		
-		
-		
+		User user = new User(userId, password, name, email);	
 		UserDAO userDAO = new UserDAO();
 		
 		try {
 			userDAO.addUser(user);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-		//Database.addUser(user);
-		
-		
-		
 		
 		resp.sendRedirect("/slipp");
 	}
