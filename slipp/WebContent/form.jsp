@@ -16,24 +16,17 @@
 			<div class="span12">
 				<section id="typography">
 				<div class="page-header">
-					<c:choose>
-						<c:when test="${empty user.userId}">
-							<h1>회원가입</h1>	
-						</c:when>
-						<c:otherwise>
-							<h1>개인정보수정</h1>
-						</c:otherwise>
-					</c:choose>
+					<c:set var="name_val" value="회원가입"/>
+					<c:if test="${isUpdate}">
+					<c:set var="name_val" value="개인정보수정"/>
+					</c:if>
+					<h1>${name_val}</h1>
 				</div>
 				</section>
 				
-				<c:set var="name_val" value="회원가입"/>
-				<c:if test="${not empty user.userId}">
-				<c:set var="name_val" value="확인"/>
-				</c:if>
 				
 				<c:set var="actionUrl" value="/slipp/users/create"/>
-				<c:if test="${not empty user.userId}">
+				<c:if test="${isUpdate}">
 				<c:set var="actionUrl" value="/slipp/users/update"/>
 				</c:if>
 								
@@ -47,11 +40,11 @@
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
 							<c:choose>
-								<c:when test="${empty user.userId}">
-									<input type="text" name="userId" value="${user.userId}"/>
+								<c:when test="${isUpdate}">
 								</c:when>
 								<c:otherwise>
-									${user.userId}
+									<input type="text" name="userId" value="${user.userId}"/>
+									<input type="hidden" name="userId" value="${user.userId}"/>
 								</c:otherwise>
 							</c:choose>
 						</div>
