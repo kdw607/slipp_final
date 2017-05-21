@@ -2,19 +2,35 @@ package net.slipp.user;
 
 import java.sql.SQLException;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 import com.google.gson.annotations.Expose;
 
 import net.slipp.db.Database;
 
 public class User {
 	
-	@Expose(serialize = false)
-	private String userId;
+	//정규표현식 이용
+	//@Pattern(regexp = "A-Xa-z]\\d[A-Za-z]\\s?\\d[A-Za-z]\\d"
+	//, message="Postal code validation failed.") -> 레귤러익스프레스에 어긋날때 보내는 매시지
+	
 	@Expose
+	@NotNull
+	@Size(min=4, max=12)
+	private String userId;
+	@Expose(serialize = false)
+	@NotNull
+	@Size(min=4, max=12)
 	private String password;
 	@Expose
+	@NotNull
+	@Size(min=2, max=10)
 	private String name;
 	@Expose
+	@Email
 	private String email;
 	
 
