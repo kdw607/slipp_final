@@ -50,7 +50,7 @@ public class UserValidatorTest {
 	
 	@Test
 	public void email()throws Exception{
-		User user = new User("user", "password", "name", "email");
+		User user = new User("user", "password", "name", "");
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 		assertEquals(1, constraintViolations.size());
 		System.out.println(constraintViolations.iterator().next().getMessage());
