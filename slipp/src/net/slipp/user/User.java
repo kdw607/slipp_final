@@ -2,13 +2,19 @@ package net.slipp.user;
 
 import java.sql.SQLException;
 
+import com.google.gson.annotations.Expose;
+
 import net.slipp.db.Database;
 
 public class User {
-
+	
+	@Expose(serialize = false)
 	private String userId;
+	@Expose
 	private String password;
+	@Expose
 	private String name;
+	@Expose
 	private String email;
 	
 
