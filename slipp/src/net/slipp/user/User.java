@@ -85,6 +85,16 @@ public class User {
 		return "User [userId=" + userId + ", password=" + password + ", name="
 				+ name + ", email=" + email + "]";
 	}
+	
+	
+	public boolean isSameUser(String newuserId){
+		if (this.userId == null) {
+			return false;
+		}
+		
+		return this.userId.equals(newuserId);
+		
+	}
 
 
 	public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException{
