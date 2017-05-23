@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 			User.login(userId, password);
 			HttpSession session = req.getSession();
 			session.setAttribute(SESSION_USER_ID, userId);//session 다른 jsp 에서 데이터 접근 가능
-			resp.sendRedirect("/slipp");
+			resp.sendRedirect("/");
 			
 		}catch(UserNotFoundException e){//없는 사용자 로그인할때
 				

@@ -31,7 +31,7 @@ public class UpdateUserServlet extends HttpServlet{
 		String sessionUserId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 		if(sessionUserId == null){
-			resp.sendRedirect("/slipp");
+			resp.sendRedirect("/");
 			return ;
 		}
 		
@@ -44,7 +44,7 @@ public class UpdateUserServlet extends HttpServlet{
 		}
 				
 		if (!user.isSameUser(sessionUserId)) {
-			resp.sendRedirect("/slipp");
+			resp.sendRedirect("/");
 			return ;
 		}
 
@@ -66,7 +66,7 @@ public class UpdateUserServlet extends HttpServlet{
 		} catch (SQLException e) {
 		}
 		
-		resp.sendRedirect("/slipp");
+		resp.sendRedirect("/");
 		
 	}
 	

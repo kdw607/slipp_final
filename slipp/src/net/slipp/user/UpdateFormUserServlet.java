@@ -29,7 +29,7 @@ public class UpdateFormUserServlet extends HttpServlet{
 		String userId = SessionUtils.getStringValue(session, LoginServlet.SESSION_USER_ID);
 		
 		if(userId==null){
-			resp.sendRedirect("/slipp");
+			resp.sendRedirect("/");
 			return ;
 		}
 		

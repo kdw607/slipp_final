@@ -18,7 +18,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		session.removeAttribute("userId");
-		resp.sendRedirect("/slipp");
+		resp.sendRedirect("/");
 
 	}
 	

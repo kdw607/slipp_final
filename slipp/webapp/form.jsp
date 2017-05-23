@@ -25,9 +25,9 @@
 				</section>
 				
 				
-				<c:set var="actionUrl" value="/slipp/users/create"/>
+				<c:set var="actionUrl" value="/users/create"/>
 				<c:if test="${isUpdate}">
-				<c:set var="actionUrl" value="/slipp/users/update"/>
+				<c:set var="actionUrl" value="/users/update"/>
 				</c:if>
 								
 				<form class="form-horizontal" action="${actionUrl}" method="post">

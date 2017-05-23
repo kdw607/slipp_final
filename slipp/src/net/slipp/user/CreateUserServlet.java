@@ -53,7 +53,7 @@ public class CreateUserServlet extends HttpServlet {
 		} catch (SQLException e) {
 		}
 		
-		resp.sendRedirect("/slipp");
+		resp.sendRedirect("/");
 	}
 	
 	private void forwardJSP(HttpServletRequest req, HttpServletResponse resp, String errorMessage) throws ServletException, IOException {

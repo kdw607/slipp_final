@@ -15,15 +15,15 @@
           <div class="nav-collapse collapse">
           
             <ul class="nav">
-              <li><a href="/slipp">Home</a></li>
+              <li><a href="/">Home</a></li>
               <c:choose>
               <c:when test="${not empty userId}">
-                    <li><a href="/slipp/users/logout">로그아웃</a></li>
-              		<li><a href="/slipp/users/update_Form">개인정보수정</a></li>
+                    <li><a href="/users/logout">로그아웃</a></li>
+              		<li><a href="/users/update_Form">개인정보수정</a></li>
               </c:when>
               <c:otherwise>
-                    <li><a href="/slipp/login.jsp">로그인</a></li>
-                    <li><a href="/slipp/users/createForm">회원가입</a></li>
+                    <li><a href="/login.jsp">로그인</a></li>
+                    <li><a href="/users/createForm">회원가입</a></li>
               </c:otherwise>
               </c:choose>
              

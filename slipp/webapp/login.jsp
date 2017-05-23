@@ -18,7 +18,7 @@
 					<h1>로그인</h1>
 				</div>
 				
-				<form class="form-horizontal" action="/slipp/users/login" method="post">
+				<form class="form-horizontal" action="/users/login" method="post">
 					
 					<c:if test="${not empty errorMessage}">
 					<div class="control-group">
