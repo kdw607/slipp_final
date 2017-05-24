@@ -17,7 +17,6 @@ public class UserDAOTest {
 
 		userDao = new UserDAO();
 
-		
 	}
 	
 	@Test
@@ -76,7 +75,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void 존재하지_않는_사용자_조회() throws Exception{
+	public void unfind_user_check() throws Exception{
 
 		User user = UserTest.TEST_USER;
 		userDao.removeUser(user.getUserId());
