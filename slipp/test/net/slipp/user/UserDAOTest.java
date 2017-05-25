@@ -27,19 +27,7 @@ public class UserDAOTest {
 		assertNotNull(con);
 	}
 	
-	/*
-	@Test
-	public void addUser() throws Exception{
-		User user = UserTest.TEST_USER;
-		//userDao.addUser(UserTest.TEST_USER);
-		userDao.removeUser(user.getUserId());
-		userDao.addUser(user);
-		
-		//userDao.addUser(UserTest.TEST_USER);
-		
-	}*/
-	
-	
+
 	@Test
 	public void crud() throws Exception{
 		
@@ -47,30 +35,14 @@ public class UserDAOTest {
 
 		userDao.removeUser(user.getUserId());
 		userDao.addUser(user);
-		
 		User dbUser = userDao.findByUserId(user.getUserId());
 		assertEquals(user, dbUser);
-		//userDao.addUser(UserTest.TEST_USER);
 		
 		
 		User updateUser = new User(user.getUserId(), "updatePass", "updateName", "updateEmail@");
 		userDao.updateUser(updateUser);
 		dbUser = userDao.findByUserId(updateUser.getUserId());
 		assertEquals(updateUser, dbUser);
-		
-	}
-	
-	/*
-	public void findByUserId() throws Exception {
-
-		User user = userDao.findByUserId("userId");
-		assertEquals(UserTest.TEST_USER, user);
-		
-	}*/
-	
-	
-	private void assertFalse(User user, User dbUser) {
-		// TODO Auto-generated method stub
 		
 	}
 

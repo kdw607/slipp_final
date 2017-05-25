@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import net.slipp.support.JdbcTemplate;
+
 public class UserDAO {
 
 	public Connection getConnection() throws SQLException {
@@ -26,33 +28,21 @@ public class UserDAO {
 	}
 
 	public void addUser(User user) throws SQLException {
-		
-		String sql = "insert into users values(?, ?, ?, ?)";
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		
-		try {
-			conn = getConnection();
-			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getUserId());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getName());
-			pstmt.setString(4, user.getEmail());
-			
-			pstmt.executeUpdate();
-			
-		} finally{
-			
-			if(pstmt != null){
-				pstmt.close();
-			}
-			
-			if(conn != null){
-				conn.close();
-			}
-		}
+		JdbcTemplate jdbc = new JdbcTemplate();
+		jdbc.addUser(user, this);
+	}
 
+	public void SetParameters(User user, PreparedStatement pstmt)
+			throws SQLException {
+		pstmt.setString(1, user.getUserId());
+		pstmt.setString(2, user.getPassword());
+		pstmt.setString(3, user.getName());
+		pstmt.setString(4, user.getEmail());
+	}
+
+	public String createQuery() {
+
+		return "insert into users values(?, ?, ?, ?)";
 	}
 
 	public User findByUserId(String userId) throws SQLException{
