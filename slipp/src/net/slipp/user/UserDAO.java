@@ -15,84 +15,45 @@ import net.slipp.support.bark_SelectJdbcTemplate;
 public class UserDAO {
 
 	public void addUser(User user) throws SQLException {
-		
-		PreparedStatementSetter pss = new PreparedStatementSetter() {
-		
-			@Override
-			public void setParameters(PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1, user.getUserId());
-				pstmt.setString(2, user.getPassword());
-				pstmt.setString(3, user.getName());
-				pstmt.setString(4, user.getEmail());				
-			}
-		};
-		
-		//어나미너스 클래스
+				
+		//�뼱�굹誘몃꼫�뒪 �겢�옒�뒪
 		JdbcTemplate jdbc = new JdbcTemplate();
 		String sql = "insert into users values(?, ?, ?, ?)";
-		jdbc.executeUpdate(sql, pss);
+		jdbc.executeUpdate(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
 	}
 
 	public void removeUser(String userId) throws SQLException {
-		
-		PreparedStatementSetter pss = new PreparedStatementSetter() {
-			
-			@Override
-			public void setParameters(PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1, userId);
-			}
-		};
 
 		JdbcTemplate jdbc = new JdbcTemplate();		
 		String sql = "delete from users where userId = ?";
-		jdbc.executeUpdate(sql, pss);
+		jdbc.executeUpdate(sql, userId);
 	}
 	
-	public void updateUser(User user) throws SQLException {
-		
-		PreparedStatementSetter pss = new PreparedStatementSetter() {
-			
-			@Override
-			public void setParameters(PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1, user.getPassword());
-				pstmt.setString(2, user.getName());
-				pstmt.setString(3, user.getEmail());
-				pstmt.setString(4, user.getUserId());
-			}
-		};
-		
+	public void updateUser(User user) throws SQLException {		
 		
 		JdbcTemplate jdbc = new JdbcTemplate();
 		String sql = "update users set password=?, name=?, email=? where userId=?";
-		jdbc.executeUpdate(sql, pss);
+		jdbc.executeUpdate(sql, user.getPassword(), user.getName(), user.getEmail(), user.getUserId());
 	}
 	
 	
-	public User findByUserId(String userId) throws SQLException{
+	public User findByUserId(String userId) throws SQLException{		
 		
-		PreparedStatementSetter pss = new PreparedStatementSetter() {
+		RowMapper<User> rm = new RowMapper<User>() {
 			
 			@Override
-			public void setParameters(PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1, userId);				
-			}
-		};
-		
-		RowMapper rm = new RowMapper() {
-			
-			@Override
-			public Object maoRow(ResultSet rs) throws SQLException {
+			public User mapRow(ResultSet rs) throws SQLException {
 				return new User(
 							rs.getString("userId"),
 							rs.getString("password"),
-							rs.getString("name"),
+			 				rs.getString("name"),
 							rs.getString("email"));
 			}
 		};
 		
 		JdbcTemplate SJdbc = new JdbcTemplate();		
 		String sql = "select * from users where userId = ?";
-		return (User)SJdbc.executeQuery(sql, pss, rm);
+		return SJdbc.executeQuery(sql, rm, userId);
 		
 	}
 }

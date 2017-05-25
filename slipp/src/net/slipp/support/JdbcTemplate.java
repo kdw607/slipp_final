@@ -35,10 +35,35 @@ public class JdbcTemplate {
 		}
 	}
 	
+	
+	public void executeUpdate(String sql, Object... parameters) throws SQLException {
+		
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+
+			for (int i = 0; i < parameters.length; i++) {
+				pstmt.setObject(i+1,  parameters[i]);
+			}
+			
+			pstmt.executeUpdate();
+			
+		} finally{			
+			if(pstmt != null){
+				pstmt.close();
+			}
+			if(conn != null){
+				conn.close();
+			}
+		}
+	}
 
 	
-	//결과값을 알수 없어서 User -> Object로
-	public Object executeQuery(String sql, PreparedStatementSetter pss, RowMapper rm) throws SQLException{
+	//寃곌낵媛믪쓣 �븣�닔 �뾾�뼱�꽌 User -> Object濡�
+	public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException{
 		
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -55,7 +80,7 @@ public class JdbcTemplate {
 				return null;
 			}
 			
-			return rm.maoRow(rs);			
+			return rm.mapRow(rs);			
 		}finally{
 			if(rs != null){
 				rs.close();
@@ -65,6 +90,44 @@ public class JdbcTemplate {
 				pstmt.close();
 			}
 			
+			if(conn != null){
+				conn.close();
+			}
+		}
+	}
+	
+	public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameObjects) throws SQLException{
+		
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			conn = ConnectionManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			PreparedStatementSetter pss = new PreparedStatementSetter() {
+				
+				@Override
+				public void setParameters(PreparedStatement pstmt) throws SQLException {
+					for (int i = 0; i < parameObjects.length; i++) {
+						pstmt.setObject(i+1,  parameObjects[i]);
+					}
+				}
+			};
+			rs = pstmt.executeQuery();
+			
+			if(!rs.next()){
+				return null;
+			}
+			return rm.mapRow(rs);			
+		}finally{
+			if(rs != null){
+				rs.close();
+			}
+			if(pstmt != null){
+				pstmt.close();
+			}
 			if(conn != null){
 				conn.close();
 			}
