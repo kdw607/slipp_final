@@ -11,21 +11,6 @@ import net.slipp.support.JdbcTemplate;
 import net.slipp.support.SelectJdbcTemplate;
 
 public class UserDAO {
-	public Connection getConnection() throws SQLException {
-
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-		String id = "board";
-		String pw = "board";
-		
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-	}
 
 	public void addUser(User user) throws SQLException {
 		

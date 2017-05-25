@@ -9,23 +9,7 @@ import java.sql.SQLException;
 import net.slipp.user.User;
 
 public abstract class SelectJdbcTemplate {
-	
-	public Connection getConnection() throws SQLException {
-
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-		String id = "board";
-		String pw = "board";
 		
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-	
 	//결과값을 알수 없어서 User -> Object로
 	public Object executeQuery(String sql) throws SQLException{
 		
@@ -34,7 +18,7 @@ public abstract class SelectJdbcTemplate {
 		ResultSet rs=null;
 		
 		try {
-			conn = getConnection();
+			conn = ConnectionManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			setParameters(pstmt);	
 			

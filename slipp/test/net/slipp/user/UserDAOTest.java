@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author DS-16-D3-007
+ *
+ */
 public class UserDAOTest {
 
 	private UserDAO userDao;
@@ -18,15 +22,6 @@ public class UserDAOTest {
 		userDao = new UserDAO();
 
 	}
-	
-	@Test
-	public void connection() throws SQLException {
-		
-		UserDAO userDao = new UserDAO();
-		Connection con = userDao.getConnection();
-		assertNotNull(con);
-	}
-	
 
 	@Test
 	public void crud() throws Exception{
