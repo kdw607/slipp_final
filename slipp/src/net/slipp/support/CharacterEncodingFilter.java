@@ -18,12 +18,11 @@ public class CharacterEncodingFilter implements Filter {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CharacterEncodingFilter.class);
 
-	
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		
 		logger.debug("character encoding filter init!");
-		System.out.println("charater encoding filter init!");
+		//System.out.println("charater encoding filter init!");
 	}
 	
 	@Override

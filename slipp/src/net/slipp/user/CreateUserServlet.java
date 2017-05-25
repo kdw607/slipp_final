@@ -15,13 +15,17 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import net.slipp.WebServletLauncher;
 import net.slipp.db.Database;
 import net.slipp.support.MyValidatorFactory;
 
 
 @WebServlet("/users/create")
 public class CreateUserServlet extends HttpServlet {
+	private static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -34,6 +38,8 @@ public class CreateUserServlet extends HttpServlet {
 		} catch (IllegalAccessException | InvocationTargetException e1) {
 			throw new ServletException(e1); 
 		}
+		
+		logger.debug("User : {}", user);
 		
 		
 		Validator validator = MyValidatorFactory.createValidator();

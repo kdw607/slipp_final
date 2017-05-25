@@ -14,6 +14,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.slipp.support.CharacterEncodingFilter;
 import net.slipp.support.MyValidatorFactory;
 
 
@@ -21,6 +25,8 @@ import net.slipp.support.MyValidatorFactory;
 @WebServlet("/users/update_Form")
 public class UpdateFormUserServlet extends HttpServlet{
 
+	private static final Logger logger = LoggerFactory.getLogger(UpdateFormUserServlet.class);
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -33,9 +39,7 @@ public class UpdateFormUserServlet extends HttpServlet{
 			return ;
 		}
 		
-		System.out.println("User Id : " + userId);
-		
-
+		logger.debug("User Id : {}", userId);
 		
 		UserDAO userDao = new UserDAO();							//model
 		

@@ -3,10 +3,16 @@ package net.slipp.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.slipp.support.CharacterEncodingFilter;
+
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JavaBeanUtilsTest {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CharacterEncodingFilter.class);
 	
 	@Test
 	public void populate() throws Exception{
@@ -16,8 +22,8 @@ public class JavaBeanUtilsTest {
 	    params.put("id", new String[]{"10"});
 	    final JavaBean javaBean = new JavaBean();
 	    BeanUtilsBean.getInstance().populate(javaBean, params);
-	    System.out.println(javaBean.getUserName());
-	    System.out.println(javaBean.getPassword());
-	    System.out.println(javaBean.getId());
+	    logger.debug(javaBean.getUserName());
+	    logger.debug(javaBean.getPassword());
+	    logger.debug(javaBean.getId() + "");
 	}
 }
