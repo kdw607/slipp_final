@@ -27,7 +27,7 @@ public abstract class JdbcTemplate {
 	}
 	
 	
-	public void addUser(User user) throws SQLException {
+	public void insert() throws SQLException {
 		
 		String sql = createQuery();
 		Connection conn=null;
@@ -37,7 +37,7 @@ public abstract class JdbcTemplate {
 			conn = getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
-			SetParameters(user, pstmt);
+			SetParameters(pstmt);
 			
 			pstmt.executeUpdate();
 			
@@ -51,9 +51,9 @@ public abstract class JdbcTemplate {
 				conn.close();
 			}
 		}
-
 	}
 	
 	public abstract String createQuery();
-	public abstract void SetParameters(User user, PreparedStatement pstmt) throws SQLException;
+	public abstract void SetParameters(PreparedStatement pstmt) throws SQLException;
+
 }

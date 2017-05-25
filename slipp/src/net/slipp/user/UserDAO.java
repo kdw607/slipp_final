@@ -31,7 +31,7 @@ public class UserDAO {
 		
 		//어나미너스 클래스
 		JdbcTemplate jdbc = new JdbcTemplate(){
-			public void SetParameters(User user, PreparedStatement pstmt)
+			public void SetParameters(PreparedStatement pstmt)
 					throws SQLException {
 				pstmt.setString(1, user.getUserId());
 				pstmt.setString(2, user.getPassword());
@@ -44,7 +44,7 @@ public class UserDAO {
 				return "insert into users values(?, ?, ?, ?)";
 			}
 		};
-		jdbc.addUser(user);
+		jdbc.insert();
 	}
 
 
