@@ -28,22 +28,25 @@ public class UserDAO {
 	}
 
 	public void addUser(User user) throws SQLException {
-		JdbcTemplate jdbc = new JdbcTemplate();
-		jdbc.addUser(user, this);
+		
+		//어나미너스 클래스
+		JdbcTemplate jdbc = new JdbcTemplate(){
+			public void SetParameters(User user, PreparedStatement pstmt)
+					throws SQLException {
+				pstmt.setString(1, user.getUserId());
+				pstmt.setString(2, user.getPassword());
+				pstmt.setString(3, user.getName());
+				pstmt.setString(4, user.getEmail());
+			}
+
+			public String createQuery() {
+
+				return "insert into users values(?, ?, ?, ?)";
+			}
+		};
+		jdbc.addUser(user);
 	}
 
-	public void SetParameters(User user, PreparedStatement pstmt)
-			throws SQLException {
-		pstmt.setString(1, user.getUserId());
-		pstmt.setString(2, user.getPassword());
-		pstmt.setString(3, user.getName());
-		pstmt.setString(4, user.getEmail());
-	}
-
-	public String createQuery() {
-
-		return "insert into users values(?, ?, ?, ?)";
-	}
 
 	public User findByUserId(String userId) throws SQLException{
 

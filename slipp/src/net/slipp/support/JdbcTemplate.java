@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import net.slipp.user.User;
 import net.slipp.user.UserDAO;
 
-public class JdbcTemplate {
+public abstract class JdbcTemplate {
 
 	public Connection getConnection() throws SQLException {
 
@@ -27,9 +27,9 @@ public class JdbcTemplate {
 	}
 	
 	
-	public void addUser(User user, UserDAO userDAO) throws SQLException {
+	public void addUser(User user) throws SQLException {
 		
-		String sql = userDAO.createQuery();
+		String sql = createQuery();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		
@@ -37,7 +37,7 @@ public class JdbcTemplate {
 			conn = getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
-			userDAO.SetParameters(user, pstmt);
+			SetParameters(user, pstmt);
 			
 			pstmt.executeUpdate();
 			
@@ -53,5 +53,7 @@ public class JdbcTemplate {
 		}
 
 	}
-
+	
+	public abstract String createQuery();
+	public abstract void SetParameters(User user, PreparedStatement pstmt) throws SQLException;
 }
