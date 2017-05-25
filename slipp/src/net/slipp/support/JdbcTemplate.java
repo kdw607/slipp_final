@@ -27,15 +27,13 @@ public abstract class JdbcTemplate {
 	}
 	
 	
-	public void insert() throws SQLException {
+	public void executeUpdate(String sql) throws SQLException {
 		
-		String sql = createQuery();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		
 		try {
 			conn = getConnection();
-			
 			pstmt = conn.prepareStatement(sql);
 			SetParameters(pstmt);
 			
@@ -53,7 +51,6 @@ public abstract class JdbcTemplate {
 		}
 	}
 	
-	public abstract String createQuery();
 	public abstract void SetParameters(PreparedStatement pstmt) throws SQLException;
 
 }

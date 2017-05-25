@@ -38,18 +38,45 @@ public class UserDAO {
 				pstmt.setString(3, user.getName());
 				pstmt.setString(4, user.getEmail());
 			}
-
-			public String createQuery() {
-
-				return "insert into users values(?, ?, ?, ?)";
-			}
 		};
-		jdbc.insert();
+		String sql = "insert into users values(?, ?, ?, ?)";
+		jdbc.executeUpdate(sql);
 	}
 
+	public void removeUser(String userId) throws SQLException {
 
+		JdbcTemplate jdbc = new JdbcTemplate() {
+			
+			@Override
+			public void SetParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1,  userId);
+			}
+		};
+		
+		String sql = "delete from users where userId = ?";
+		jdbc.executeUpdate(sql);
+	}
+	
+	public void updateUser(User user) throws SQLException {
+		
+		JdbcTemplate jdbc = new JdbcTemplate() {
+			
+			@Override
+			public void SetParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, user.getPassword());
+				pstmt.setString(2, user.getName());
+				pstmt.setString(3, user.getEmail());
+				pstmt.setString(4, user.getUserId());
+			}
+		};
+		
+		String sql = "update users set password=?, name=?, email=? where userId=?";
+		jdbc.executeUpdate(sql);
+	}
+	
+	
 	public User findByUserId(String userId) throws SQLException{
-
+		
 		String sql = "select * from users where userId = ?";
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -64,12 +91,12 @@ public class UserDAO {
 			
 			if(rs.next()){
 				User user = new User(rs.getString("userId"),
-									 rs.getString("password"),
-									 rs.getString("name"),
-									 rs.getString("email"));
+						rs.getString("password"),
+						rs.getString("name"),
+						rs.getString("email"));
 				return user;
 			}
-
+			
 		}finally{
 			if(rs != null){
 				rs.close();
@@ -85,54 +112,6 @@ public class UserDAO {
 		}
 		return null;
 	}
-
-	public void removeUser(String userId) throws SQLException {
-
-		String sql = "delete from users where userId = ?";
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,  userId);
-			
-			pstmt.executeUpdate();
-		}finally{
-			if(pstmt != null){
-				pstmt.close();
-			}
-			
-			if(conn != null){
-				conn.close();
-			}
-		}
-	}
-
-	public void updateUser(User user) throws SQLException {
-		
-		String sql = "update users set password=?, name=?, email=? where userId=?";
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getPassword());
-			pstmt.setString(2, user.getName());
-			pstmt.setString(3, user.getEmail());
-			pstmt.setString(4, user.getUserId());
-			
-			pstmt.executeUpdate();
-			
-		}finally{
-			if(pstmt != null){
-				pstmt.close();
-			}
-			
-			if(conn != null){
-				conn.close();
-			}	
-		}
-	}
+	
+	
 }
