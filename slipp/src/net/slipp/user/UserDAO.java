@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import net.slipp.support.JdbcTemplate;
+import net.slipp.support.SelectJdbcTemplate;
 
 public class UserDAO {
-
 	public Connection getConnection() throws SQLException {
 
 		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
@@ -49,7 +49,7 @@ public class UserDAO {
 			
 			@Override
 			public void SetParameters(PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1,  userId);
+				pstmt.setString(1, userId);
 			}
 		};
 		
@@ -77,41 +77,29 @@ public class UserDAO {
 	
 	public User findByUserId(String userId) throws SQLException{
 		
-		String sql = "select * from users where userId = ?";
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
+		SelectJdbcTemplate SJdbc = new SelectJdbcTemplate() {
+			
+			public User maoRow(ResultSet rs) throws SQLException {
+				if(!rs.next()){
+					return null;
+				}
+				
+				return new User(
+							rs.getString("userId"),
+							rs.getString("password"),
+							rs.getString("name"),
+							rs.getString("email"));
+			}
+
+			public void setParameters(PreparedStatement pstmt)
+					throws SQLException {
+				pstmt.setString(1, userId);
+			}
+			
+		};
 		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);	
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
-				User user = new User(rs.getString("userId"),
-						rs.getString("password"),
-						rs.getString("name"),
-						rs.getString("email"));
-				return user;
-			}
-			
-		}finally{
-			if(rs != null){
-				rs.close();
-			}
-			
-			if(pstmt != null){
-				pstmt.close();
-			}
-			
-			if(conn != null){
-				conn.close();
-			}
-		}
-		return null;
+		String sql = "select * from users where userId = ?";
+		return (User)SJdbc.executeQuery(sql);
+		
 	}
-	
-	
 }
