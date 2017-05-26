@@ -16,6 +16,8 @@ import net.slipp.user.UserDAO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import core.jdbc.DataAccessException;
+
 
 @WebServlet("/api/users/find")
 public class ApiFindUserServlet extends HttpServlet{
@@ -50,7 +52,7 @@ public class ApiFindUserServlet extends HttpServlet{
 			PrintWriter out = resp.getWriter();
 			out.print(jsonData);
 			
-		} catch (SQLException e) {
+		} catch (DataAccessException e) {
 		}
 		
 	}

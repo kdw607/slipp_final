@@ -59,7 +59,7 @@ public class JdbcTemplate {
 		return list.get(0);
 	}
 	
-	public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameObjects) throws SQLException{
+	public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameObjects){
 		
 		return executeQuery(sql, rm, createPreparedstatementSetter(parameObjects));
 	}
@@ -114,7 +114,7 @@ public class JdbcTemplate {
 				return new PreparedStatementSetter(){
 					
 			@Override
-			public void setParameters(PreparedStatement pstmt){
+			public void setParameters(PreparedStatement pstmt) throws SQLException{
 				for (int i = 0; i < parameObjects.length; i++) {
 					pstmt.setObject(i+1,  parameObjects[i]);
 				}
