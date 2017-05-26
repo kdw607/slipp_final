@@ -4,15 +4,21 @@ import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 /**
  * @author DS-16-D3-007
  *
  */
 public class UserDAOTest {
+	
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDAOTest.class);
 
 	private UserDAO userDao;
 	
@@ -50,4 +56,11 @@ public class UserDAOTest {
 		assertNull(dbUser);
 	}
 	
+	@Test
+	public void findUsers() throws Exception{
+	
+		List<User> users = userDao.findUsers();
+		assertTrue(users.size() > 0);
+		logger.debug("Users : {}", users);
+	}
 }
