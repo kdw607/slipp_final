@@ -8,14 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import net.slipp.support.JdbcTemplate;
-import net.slipp.support.PreparedStatementSetter;
-import net.slipp.support.RowMapper;
-import net.slipp.support.bark_SelectJdbcTemplate;
+import core.bark_SelectJdbcTemplate;
+import core.jdbc.JdbcTemplate;
+import core.jdbc.PreparedStatementSetter;
+import core.jdbc.RowMapper;
 
 public class UserDAO {
 
-	public void addUser(User user) throws SQLException {
+	public void addUser(User user){
 				
 		//�뼱�굹誘몃꼫�뒪 �겢�옒�뒪
 		JdbcTemplate jdbc = new JdbcTemplate();
@@ -23,14 +23,14 @@ public class UserDAO {
 		jdbc.executeUpdate(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
 	}
 
-	public void removeUser(String userId) throws SQLException {
+	public void removeUser(String userId){
 
 		JdbcTemplate jdbc = new JdbcTemplate();		
 		String sql = "delete from users where userId = ?";
 		jdbc.executeUpdate(sql, userId);
 	}
 	
-	public void updateUser(User user) throws SQLException {		
+	public void updateUser(User user){		
 		
 		JdbcTemplate jdbc = new JdbcTemplate();
 		String sql = "update users set password=?, name=?, email=? where userId=?";
@@ -38,12 +38,12 @@ public class UserDAO {
 	}
 	
 	
-	public User findByUserId(String userId) throws SQLException{		
+	public User findByUserId(String userId){		
 		
 		RowMapper<User> rm = new RowMapper<User>() {
 			
 			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
+			public User mapRow(ResultSet rs){
 				return new User(
 							rs.getString("userId"),
 							rs.getString("password"),
@@ -58,12 +58,12 @@ public class UserDAO {
 		
 	}
 
-	public List<User> findUsers() throws SQLException {
+	public List<User> findUsers(){
 		
 		RowMapper<User> rm = new RowMapper<User>() {
 			
 			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
+			public User mapRow(ResultSet rs){
 				return new User(
 							rs.getString("userId"),
 							rs.getString("password"),

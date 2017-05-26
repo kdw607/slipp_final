@@ -1,4 +1,4 @@
-package net.slipp.support;
+package core.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ import net.slipp.user.UserDAO;
 
 public class JdbcTemplate {
 	
-	public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
+	public void executeUpdate(String sql, PreparedStatementSetter pss)throws DataAccessException{
 		
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -25,27 +25,33 @@ public class JdbcTemplate {
 			
 			pstmt.executeUpdate();
 			
+		} catch(SQLException e){
+			throw new DataAccessException(e);
 		} finally{
-			
-			if(pstmt != null){
-				pstmt.close();
+			try {
+				if(pstmt != null){
+					pstmt.close();
+				}
+				
+				if(conn != null){
+					conn.close();
+				}
+			}catch (SQLException e) {
+				throw new DataAccessException(e);
 			}
-			
-			if(conn != null){
-				conn.close();
-			}
+
 		}
 	}
 	
 	
-	public void executeUpdate(String sql, Object... parameters) throws SQLException {
+	public void executeUpdate(String sql, Object... parameters){
 
 		executeUpdate(sql, createPreparedstatementSetter(parameters));
 		
 	}
 
 	
-	public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException{
+	public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss){
 		List<T> list = list(sql, rm, pss);
 		if(list.isEmpty()){
 			return null;
@@ -58,7 +64,7 @@ public class JdbcTemplate {
 		return executeQuery(sql, rm, createPreparedstatementSetter(parameObjects));
 	}
 
-	public <T> List<T> list(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException{
+	public <T> List<T> list(String sql, RowMapper<T> rm, PreparedStatementSetter pss){
 		
 		Connection conn=null;
 		PreparedStatement pstmt=null;
@@ -77,22 +83,27 @@ public class JdbcTemplate {
 			}
 			return list;
 					
-		}finally{
-			if(rs != null){
-				rs.close();
-			}
-			
-			if(pstmt != null){
-				pstmt.close();
-			}
-			
-			if(conn != null){
-				conn.close();
+		}catch(SQLException e){
+			throw new DataAccessException(e);
+		}finally{			
+			try {
+				if(rs != null){
+					rs.close();
+				}
+				if(pstmt != null){
+					pstmt.close();
+				}
+				
+				if(conn != null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				throw new DataAccessException(e);
 			}
 		}
 	}
 	
-	public <T> List<T> list(String sql, RowMapper<T> rm, Object... parameObjects) throws SQLException{
+	public <T> List<T> list(String sql, RowMapper<T> rm, Object... parameObjects){
 		
 		return list(sql, rm, createPreparedstatementSetter(parameObjects));
 	}
@@ -103,7 +114,7 @@ public class JdbcTemplate {
 				return new PreparedStatementSetter(){
 					
 			@Override
-			public void setParameters(PreparedStatement pstmt) throws SQLException {
+			public void setParameters(PreparedStatement pstmt){
 				for (int i = 0; i < parameObjects.length; i++) {
 					pstmt.setObject(i+1,  parameObjects[i]);
 				}

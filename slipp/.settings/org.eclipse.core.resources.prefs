@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/net/slipp/support/JdbcTemplate.java=UTF-8
+encoding//src/core/jdbc/JdbcTemplate.java=UTF-8
 encoding//src/net/slipp/user/UserDAO.java=UTF-8

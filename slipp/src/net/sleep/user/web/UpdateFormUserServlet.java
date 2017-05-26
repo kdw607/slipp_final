@@ -1,4 +1,4 @@
-package net.slipp.user;
+package net.sleep.user.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,7 +14,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import net.slipp.support.MyValidatorFactory;
+import core.MyValidatorFactory;
+import core.SessionUtils;
+import net.slipp.user.User;
+import net.slipp.user.UserDAO;
 
 
 //Contoller
@@ -39,14 +42,11 @@ public class UpdateFormUserServlet extends HttpServlet{
 		
 		UserDAO userDao = new UserDAO();							//model
 		
-		try {
 			User user = userDao.findByUserId(userId);				//model
 			req.setAttribute("isUpdate", true);
 			req.setAttribute("user", user);
 			RequestDispatcher rd = req.getRequestDispatcher("/form.jsp");
 			rd.forward(req, resp);
-		} catch (SQLException e) {
-		}
 		
 	}
 }

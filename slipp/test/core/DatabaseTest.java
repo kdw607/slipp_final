@@ -1,6 +1,7 @@
-package net.slipp.db;
+package core;
 
 import static org.junit.Assert.*;
+import net.slipp.db.Database;
 import net.slipp.user.User;
 
 

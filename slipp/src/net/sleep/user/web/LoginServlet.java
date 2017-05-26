@@ -1,4 +1,4 @@
-package net.slipp.user;
+package net.sleep.user.web;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.slipp.user.PasswordMismatchException;
+import net.slipp.user.User;
+import net.slipp.user.UserNotFoundException;
 
 @WebServlet("/users/login")
 public class LoginServlet extends HttpServlet {
@@ -25,16 +29,16 @@ public class LoginServlet extends HttpServlet {
 		try{
 			User.login(userId, password);
 			HttpSession session = req.getSession();
-			session.setAttribute(SESSION_USER_ID, userId);//session ´Ù¸¥ jsp ¿¡¼­ µ¥ÀÌÅÍ Á¢±Ù °¡´É
+			session.setAttribute(SESSION_USER_ID, userId);//session ï¿½Ù¸ï¿½ jsp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			resp.sendRedirect("/");
 			
-		}catch(UserNotFoundException e){//¾ø´Â »ç¿ëÀÚ ·Î±×ÀÎÇÒ¶§
+		}catch(UserNotFoundException e){//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½
 				
-			forwardJSP(req, resp, "Á¸ÀçÇÏÁö ¾Ê´Â »ç¿ëÀÚ ÀÔ´Ï´Ù. ´Ù½Ã ·Î±×ÀÎÇÏ¼¼¿ä.");
+			forwardJSP(req, resp, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 			
-		}catch(PasswordMismatchException e){//ºñ¹Ð¹øÈ£ Æ²·ÈÀ» ½Ã
+		}catch(PasswordMismatchException e){//ï¿½ï¿½Ð¹ï¿½È£ Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-			forwardJSP(req, resp, "ºñ¹Ð¹øÈ£°¡ Æ²¸³´Ï´Ù. ´Ù½Ã ·Î±×ÀÎÇÏ¼¼¿ä");
+			forwardJSP(req, resp, "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ Æ²ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½");
 		}
 	
 	}

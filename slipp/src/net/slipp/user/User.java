@@ -13,9 +13,9 @@ import net.slipp.db.Database;
 
 public class User {
 	
-	//Á¤±ÔÇ¥Çö½Ä ÀÌ¿ë
+	//ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½
 	//@Pattern(regexp = "A-Xa-z]\\d[A-Za-z]\\s?\\d[A-Za-z]\\d"
-	//, message="Postal code validation failed.") -> ·¹±Ö·¯ÀÍ½ºÇÁ·¹½º¿¡ ¾î±ß³¯¶§ º¸³»´Â ¸Å½ÃÁö
+	//, message="Postal code validation failed.") -> ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ß³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å½ï¿½ï¿½ï¿½
 	
 	@Expose
 	@NotNull
@@ -102,13 +102,7 @@ public class User {
 		//User user = Database.findByUserId(userId);
 		
 		UserDAO userDAO = new UserDAO();
-		User user = null;
-		try {
-			user = userDAO.findByUserId(userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		User user = userDAO.findByUserId(userId);
 		
 		if(user == null){
 			throw new UserNotFoundException();

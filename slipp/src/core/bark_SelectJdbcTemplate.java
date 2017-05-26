@@ -1,4 +1,4 @@
-package net.slipp.support;
+package core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import core.jdbc.ConnectionManager;
 import net.slipp.user.User;
 
 public abstract class bark_SelectJdbcTemplate {
